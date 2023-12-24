@@ -1,17 +1,30 @@
 "use strict";
 
-import axios from "axios";
-import { ConfigService } from "./src/config/ConfigService.js";
 
-const cs = new ConfigService();
-const API_TOKEN = cs.get("KP_TOKEN");
-const API_URL = cs.get("API_URL");
-axios(`${API_URL}/v1.4/movie/random`, {
-  headers: {
-    'X-API-KEY': API_TOKEN
-  }
-}).then((responce) => {
-  console.log(responce.data);
-});
+// import { ConfigService } from "./src/config/ConfigService.js";
+import { Movie } from "./src/movie.js";
+// import { Bot } from "grammy";
+
+// const cs = new ConfigService();
+// const bot = new Bot(`${cs.get("BOT_TOKEN")}`);
+
+
+
+// bot.command("start", (ctx) => {
+//   ctx.reply("Hello!");
+// });
+const showData = async () => {
+  const qb = new Movie();
+  const data = await qb.getRandomMovieWithFilters();
+  console.log(data);
+};
+
+showData();
+
+
+// bot.start();
+
+
+
 
 
