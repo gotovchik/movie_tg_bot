@@ -1,24 +1,15 @@
 import { ConfigService } from "./config/ConfigService.js";
 import pkg from '@openmoviedb/kinopoiskdev_client';
-const { KinopoiskDev, MovieQueryBuilder, SPECIAL_VALUE } = pkg;
+const { KinopoiskDev } = pkg;
 
 
 
 export class Movie {
 
-  getRandomMovieWithFilters = async () => {
+
+  getMovieWithQuery = async (baseQuery) => {
     const cs = new ConfigService();
     const kp = new KinopoiskDev(cs.get("KP_TOKEN"))
-
-    const queryBuilder = new MovieQueryBuilder();
-
-    const baseQuery = queryBuilder
-      .select(['id', 'name', 'rating', 'poster', 'year', 'description'])
-      .filterExact('poster.url', SPECIAL_VALUE.NOT_NULL)
-      .filterExact('videos.trailers.url', SPECIAL_VALUE.NOT_NULL)
-      .filterExact('rating.imdb', SPECIAL_VALUE.NOT_NULL)
-      .filterExact('description', SPECIAL_VALUE.NOT_NULL)
-      .filterExact('name', SPECIAL_VALUE.NOT_NULL);
 
     const firstQuery = baseQuery
       .paginate(1, 1)
